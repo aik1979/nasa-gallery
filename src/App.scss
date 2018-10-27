@@ -1,3 +1,4 @@
+// get sorted naming
 .app__container {
 }
 
@@ -7,4 +8,9 @@
 
 .app__search {
 	width: 100%;
+}
+
+.app__gallery__image {
+	height: 220px;
+	object-fit: cover;
 }
