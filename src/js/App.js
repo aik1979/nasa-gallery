@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import View from "./View";
+import Gallery from "./Gallery";
 import Details from "./Details";
 
 const stack = ["react", "semantic-ui-react"];
@@ -100,7 +100,7 @@ class App extends Component {
 		let { current, ...rest } = this.state;
 		return (
 			<>
-				<View
+				<Gallery
 					{...rest}
 					onQuery={this.query}
 					onDetails={this.details}

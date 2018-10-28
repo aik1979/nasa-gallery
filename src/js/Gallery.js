@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./App.scss";
 import {
 	Container,
 	Input,
@@ -9,6 +8,7 @@ import {
 	CardGroup,
 	Image,
 } from "semantic-ui-react";
+import "../css/Gallery.scss";
 
 class View extends Component {
 	handleKeypress = event => {

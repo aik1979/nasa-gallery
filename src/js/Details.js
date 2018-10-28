@@ -1,14 +1,12 @@
 import React, { Component } from "react";
-import "./details.scss";
 import { Modal, Image, Header } from "semantic-ui-react";
+import "../css/Details.scss";
 
 function Details({ current, onClose }) {
 	let open = current !== null;
 
 	let data = (current && current.data) || {};
 	let images = (current && current.images) || [];
-
-	console.log(data);
 
 	return (
 		<Modal open={open} onClose={onClose} centered={false}>
