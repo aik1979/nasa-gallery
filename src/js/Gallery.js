@@ -5,12 +5,14 @@ import {
 	Header,
 	Divider,
 	List,
-	CardGroup,
+	Card,
 	Image,
+	Placeholder,
 } from "semantic-ui-react";
+import Item from "./Item";
 import "../css/Gallery.scss";
 
-class View extends Component {
+class Gallery extends Component {
 	handleKeypress = event => {
 		if (event.key !== "Enter") return;
 
@@ -20,16 +22,6 @@ class View extends Component {
 
 	render() {
 		let { items, loading } = this.props;
-		items = items.map(({ data, collection, thumb }) => {
-			return {
-				key: thumb,
-				image: <Image src={thumb} className="app__gallery__image" />,
-				description: data.title,
-				onClick: this.props.onDetails,
-				data,
-				collection,
-			};
-		});
 
 		return (
 			<Container className="app__container">
@@ -53,10 +45,14 @@ class View extends Component {
 
 				<Divider />
 
-				<CardGroup items={items} itemsPerRow={4} className="test" />
+				<Card.Group itemsPerRow={4}>
+					{items.map(item => {
+						return <Item item={item} onClick={this.props.onDetails} />;
+					})}
+				</Card.Group>
 			</Container>
 		);
 	}
 }
 
-export default View;
+export default Gallery;

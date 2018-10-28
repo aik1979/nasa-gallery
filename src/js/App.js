@@ -74,7 +74,7 @@ class App extends Component {
 		});
 	};
 
-	details = async (_, { data, collection }) => {
+	openDetails = async (_, { data, collection }) => {
 		this.setState({
 			current: {
 				data,
@@ -103,7 +103,7 @@ class App extends Component {
 				<Gallery
 					{...rest}
 					onQuery={this.query}
-					onDetails={this.details}
+					onDetails={this.openDetails}
 					stack={stack}
 				/>
 				<Details current={current} onClose={this.closeDetails} />

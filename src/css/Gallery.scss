@@ -10,7 +10,7 @@
 	width: 100%;
 }
 
-.app__gallery__image {
-	height: 220px;
+.app__gallery__image img {
+	height: 220px !important;
 	object-fit: cover;
 }
