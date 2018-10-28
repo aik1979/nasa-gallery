@@ -8,8 +8,6 @@ import {
 	List,
 	CardGroup,
 	Image,
-	Modal,
-	Button,
 } from "semantic-ui-react";
 
 class View extends Component {
@@ -21,7 +19,7 @@ class View extends Component {
 	};
 
 	render() {
-		let { items, loading, current } = this.props;
+		let { items, loading } = this.props;
 		items = items.map(({ data, collection, thumb }) => {
 			return {
 				key: thumb,

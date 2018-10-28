@@ -75,6 +75,12 @@ class App extends Component {
 	};
 
 	details = async (_, { data, collection }) => {
+		this.setState({
+			current: {
+				data,
+			},
+		});
+
 		let links = await (await fetch(collection)).json();
 		let images = links.filter(link => link.endsWith("jpg"));
 
