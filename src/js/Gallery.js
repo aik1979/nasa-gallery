@@ -8,6 +8,7 @@ import {
 	Card,
 	Image,
 	Placeholder,
+	Button,
 } from "semantic-ui-react";
 import Item from "./Item";
 import "../css/Gallery.scss";
@@ -17,11 +18,19 @@ class Gallery extends Component {
 		if (event.key !== "Enter") return;
 
 		let query = event.target.value.trim();
-		this.props.onQuery(query);
+		this.props.onQuery({ str: query });
 	};
 
 	render() {
-		let { items, loading } = this.props;
+		let {
+			items,
+			loading,
+			onDetails,
+			onNextPage,
+			onNextBuffer,
+			bufferFilled,
+			bufferNextExists,
+		} = this.props;
 
 		return (
 			<Container className="app__container">
@@ -51,11 +60,23 @@ class Gallery extends Component {
 							<Item
 								key={item.thumb}
 								item={item}
-								onClick={this.props.onDetails}
+								onClick={onDetails}
 							/>
 						);
 					})}
 				</Card.Group>
+
+				<Divider />
+
+				<Button disabled={!bufferFilled} onClick={onNextPage}>
+					next page
+				</Button>
+				<Button
+					disabled={!(!bufferFilled && bufferNextExists)}
+					onClick={onNextBuffer}
+				>
+					next buffer
+				</Button>
 			</Container>
 		);
 	}

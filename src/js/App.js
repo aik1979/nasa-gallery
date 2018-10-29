@@ -28,26 +28,37 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 
+		this.buffer = {
+			items: [],
+		};
+
 		this.state = {
 			items: [],
 			totalHits: -1,
 			loading: false,
+
+			bufferFilled: false,
+			bufferNextExists: false,
 
 			current: null,
 		};
 	}
 
 	// pick more proper name
-	query = async str => {
+	query = async ({ url, str }) => {
 		this.setState({ loading: true });
 
-		const url =
-			"https://images-api.nasa.gov/search?q=apollo%2011&media_type=image";
+		if (!url) {
+			url = encodeURI(
+				`https://images-api.nasa.gov/search?q=${str}&media_type=image`
+			);
+		}
 		let response = await fetch(url);
 		let { collection } = await response.json();
 
 		let {
 			items,
+			links,
 			metadata: { total_hits: totalHits },
 		} = collection;
 
@@ -67,11 +78,43 @@ class App extends Component {
 			};
 		});
 
-		this.setState({
+		let prev = links.find(({ rel }) => rel === "prev");
+		let next = links.find(({ rel }) => rel === "next");
+		prev = prev && prev.href;
+		next = next && next.href;
+
+		this.buffer = {
 			items,
+			prev,
+			next,
+		};
+
+		this.setState({
 			totalHits,
 			loading: false,
+			bufferFilled: !!items.length,
+			bufferNextExists: !!next,
 		});
+
+		this.getNextPage();
+	};
+
+	getNextPage = _ => {
+		let b = this.buffer;
+		let items = b.items.slice(0, 10);
+		b.items = b.items.slice(10);
+
+		this.setState(_ => {
+			let state = { items };
+			if (b.items.length === 0) {
+				state.bufferFilled = false;
+			}
+			return state;
+		});
+	};
+
+	getNextBuffer = _ => {
+		this.query({ url: this.buffer.next });
 	};
 
 	openDetails = async (_, { item: { data, collection } }) => {
@@ -104,6 +147,8 @@ class App extends Component {
 					{...rest}
 					onQuery={this.query}
 					onDetails={this.openDetails}
+					onNextPage={this.getNextPage}
+					onNextBuffer={this.getNextBuffer}
 					stack={stack}
 				/>
 				<Details current={current} onClose={this.closeDetails} />
