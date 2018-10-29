@@ -74,7 +74,7 @@ class App extends Component {
 		});
 	};
 
-	openDetails = async (_, { data, collection }) => {
+	openDetails = async (_, { item: { data, collection } }) => {
 		this.setState({
 			current: {
 				data,

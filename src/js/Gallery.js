@@ -47,7 +47,13 @@ class Gallery extends Component {
 
 				<Card.Group itemsPerRow={4}>
 					{items.map(item => {
-						return <Item item={item} onClick={this.props.onDetails} />;
+						return (
+							<Item
+								key={item.thumb}
+								item={item}
+								onClick={this.props.onDetails}
+							/>
+						);
 					})}
 				</Card.Group>
 			</Container>

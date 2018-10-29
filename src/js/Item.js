@@ -15,29 +15,30 @@ class Item extends Component {
 	};
 
 	render() {
-		let { data, collection, thumb } = this.props.item;
 		let { loading } = this.state;
+		let { item, onClick } = this.props;
 
 		return (
-			<Card onClick={this.props.handleDetails}>
+			<Card onClick={onClick} item={item}>
+				<Placeholder
+					className=""
+					style={{
+						height: "220px",
+						...((!loading && hidden) || {}),
+					}}
+				>
+					<Placeholder.Image />
+				</Placeholder>
+				<Image
+					wrapped
+					className="app__gallery__image"
+					src={item.thumb}
+					style={(loading && hidden) || {}}
+					onLoad={this.handleLoad}
+				/>
+
 				<Card.Content>
-					<Placeholder
-						className=""
-						style={{
-							height: "220px",
-							...((!loading && hidden) || {}),
-						}}
-					>
-						<Placeholder.Image />
-					</Placeholder>
-					<Image
-						wrapped
-						className="app__gallery__image"
-						src={thumb}
-						style={(loading && hidden) || {}}
-						onLoad={this.handleLoad}
-					/>
-					<Card.Description>{data.title}</Card.Description>
+					<Card.Description>{item.data.title}</Card.Description>
 				</Card.Content>
 			</Card>
 		);
