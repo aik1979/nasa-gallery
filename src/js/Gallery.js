@@ -24,6 +24,7 @@ class Gallery extends Component {
 	render() {
 		let {
 			items,
+			totalHits,
 			loading,
 			onDetails,
 			onNextPage,
@@ -44,13 +45,21 @@ class Gallery extends Component {
 				<Divider />
 
 				{/* can I pass properties with the same name */}
-				<Input
-					className="app__search"
-					placeholder="Search..."
-					loading={loading}
-					onKeyPress={this.handleKeypress}
-					icon="search"
-				/>
+				<Container text className="app__search">
+					<Input
+						placeholder="Search..."
+						loading={loading}
+						onKeyPress={this.handleKeypress}
+						icon="search"
+						fluid
+					/>
+
+					<p>
+						{~totalHits
+							? `got ${totalHits} hits`
+							: "enter search term"}
+					</p>
+				</Container>
 
 				<Divider />
 
