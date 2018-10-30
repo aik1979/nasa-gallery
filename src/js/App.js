@@ -3,34 +3,12 @@ import Gallery from "./Gallery";
 import Details from "./Details";
 
 const stack = ["react", "semantic-ui-react"];
-// const cards = [
-// 	{
-// 		image: "/images/avatar/large/helen.jpg",
-// 		meta: "Joined in 2013",
-// 		header: "Helen",
-// 		description: "Primary Contact",
-// 	},
-// 	{
-// 		image: "/images/avatar/large/matthew.png",
-// 		meta: "Joined in 2013",
-// 		header: "Matthew",
-// 		description: "Primary Contact",
-// 	},
-// 	{
-// 		image: "/images/avatar/large/molly.png",
-// 		meta: "Joined in 2013",
-// 		header: "Molly",
-// 		description: "Primary Contact",
-// 	},
-// ];
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 
-		this.buffer = {
-			items: [],
-		};
+		this.buffer = {};
 
 		this.state = {
 			items: [],
@@ -78,8 +56,8 @@ class App extends Component {
 			};
 		});
 
-		let prev = links.find(({ rel }) => rel === "prev");
-		let next = links.find(({ rel }) => rel === "next");
+		let prev = links && links.find(({ rel }) => rel === "prev");
+		let next = links && links.find(({ rel }) => rel === "next");
 		prev = prev && prev.href;
 		next = next && next.href;
 
@@ -100,6 +78,12 @@ class App extends Component {
 	};
 
 	getNextPage = _ => {
+		if (!this.state.bufferFilled) {
+			throw new Error(
+				"[error] ==> trying to load next page with buffer empty."
+			);
+		}
+
 		let b = this.buffer;
 		let items = b.items.slice(0, 10);
 		b.items = b.items.slice(10);
