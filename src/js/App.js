@@ -15,8 +15,8 @@ class App extends Component {
 			totalHits: -1,
 			loading: false,
 
-			bufferFilled: false,
-			bufferNextExists: false,
+			nextPageExists: false,
+			nextBufferExists: false,
 
 			current: null,
 		};
@@ -70,31 +70,20 @@ class App extends Component {
 		this.setState({
 			totalHits,
 			loading: false,
-			bufferFilled: !!items.length,
-			bufferNextExists: !!next,
+			nextBufferExists: !!next,
 		});
 
-		this.getNextPage();
+		this.getPage();
 	};
 
-	getNextPage = _ => {
-		// if (!this.state.bufferFilled) {
-		// 	throw new Error(
-		// 		"[error] ==> trying to load next page with buffer empty."
-		// 	);
-		// }
-
+	getPage = _ => {
 		let b = this.buffer;
-		let items = b.items.slice(0, 10);
+		let items;
+
+		items = b.items.slice(0, 10);
 		b.items = b.items.slice(10);
 
-		this.setState(_ => {
-			let state = { items };
-			if (b.items.length === 0) {
-				state.bufferFilled = false;
-			}
-			return state;
-		});
+		this.setState({ items, nextPageExists: !!b.items.length });
 	};
 
 	getNextBuffer = _ => {
@@ -131,7 +120,7 @@ class App extends Component {
 					{...rest}
 					onQuery={this.query}
 					onDetails={this.openDetails}
-					onNextPage={this.getNextPage}
+					onNextPage={this.getPage}
 					onNextBuffer={this.getNextBuffer}
 					stack={stack}
 				/>

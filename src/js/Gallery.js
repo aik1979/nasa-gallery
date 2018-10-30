@@ -3,7 +3,6 @@ import {
 	Container,
 	Input,
 	Header,
-	Divider,
 	List,
 	Card,
 	Button,
@@ -29,8 +28,8 @@ class Gallery extends Component {
 
 			onNextPage,
 			onNextBuffer,
-			bufferFilled, // next page(10) exists
-			bufferNextExists, // next batch(100) exists
+			nextPageExists,
+			nextBufferExists, // buffer == batch
 		} = this.props;
 
 		return (
@@ -78,14 +77,14 @@ class Gallery extends Component {
 
 							<Segment>
 								<Button
-									disabled={!bufferFilled}
+									disabled={!nextPageExists}
 									onClick={onNextPage}
 								>
 									next page
 								</Button>
 								<Button
 									disabled={
-										!(!bufferFilled && bufferNextExists)
+										!(!nextPageExists && nextBufferExists)
 									}
 									onClick={onNextBuffer}
 								>
