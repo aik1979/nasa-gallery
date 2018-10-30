@@ -6,8 +6,6 @@ import {
 	Divider,
 	List,
 	Card,
-	Image,
-	Placeholder,
 	Button,
 } from "semantic-ui-react";
 import Item from "./Item";
@@ -27,10 +25,11 @@ class Gallery extends Component {
 			totalHits,
 			loading,
 			onDetails,
+
 			onNextPage,
 			onNextBuffer,
-			bufferFilled,
-			bufferNextExists,
+			bufferFilled, // next page(10) exists
+			bufferNextExists, // next batch(100) exists
 		} = this.props;
 
 		return (
@@ -63,29 +62,35 @@ class Gallery extends Component {
 
 				<Divider />
 
-				<Card.Group itemsPerRow={4}>
-					{items.map(item => {
-						return (
-							<Item
-								key={item.thumb}
-								item={item}
-								onClick={onDetails}
-							/>
-						);
-					})}
-				</Card.Group>
+				{items.length ? (
+					<>
+						<Card.Group itemsPerRow={4}>
+							{items.map(item => {
+								return (
+									<Item
+										key={item.thumb}
+										item={item}
+										onClick={onDetails}
+									/>
+								);
+							})}
+						</Card.Group>
 
-				<Divider />
+						<Divider />
 
-				<Button disabled={!bufferFilled} onClick={onNextPage}>
-					next page
-				</Button>
-				<Button
-					disabled={!(!bufferFilled && bufferNextExists)}
-					onClick={onNextBuffer}
-				>
-					next buffer
-				</Button>
+						<Button disabled={!bufferFilled} onClick={onNextPage}>
+							next page
+						</Button>
+						<Button
+							disabled={!(!bufferFilled && bufferNextExists)}
+							onClick={onNextBuffer}
+						>
+							next buffer
+						</Button>
+					</>
+				) : (
+					""
+				)}
 			</Container>
 		);
 	}
