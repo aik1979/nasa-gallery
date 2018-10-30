@@ -7,6 +7,7 @@ import {
 	List,
 	Card,
 	Button,
+	Segment,
 } from "semantic-ui-react";
 import Item from "./Item";
 import "../css/Gallery.scss";
@@ -41,56 +42,61 @@ class Gallery extends Component {
 					</Header.Subheader>
 				</Header>
 
-				<Divider />
-
 				{/* can I pass properties with the same name */}
-				<Container text className="app__search">
-					<Input
-						placeholder="Search..."
-						loading={loading}
-						onKeyPress={this.handleKeypress}
-						icon="search"
-						fluid
-					/>
+				<Segment.Group>
+					<Segment>
+						<Input
+							placeholder="Search..."
+							loading={loading}
+							onKeyPress={this.handleKeypress}
+							icon="search"
+							fluid
+						/>
 
-					<p>
-						{~totalHits
-							? `got ${totalHits} hits`
-							: "enter search term"}
-					</p>
-				</Container>
+						{~totalHits ? (
+							<Header as="h4">got {totalHits} hits</Header>
+						) : (
+							""
+						)}
+					</Segment>
 
-				<Divider />
+					{items.length ? (
+						<>
+							<Segment>
+								<Card.Group itemsPerRow={4}>
+									{items.map(item => {
+										return (
+											<Item
+												key={item.thumb}
+												item={item}
+												onClick={onDetails}
+											/>
+										);
+									})}
+								</Card.Group>
+							</Segment>
 
-				{items.length ? (
-					<>
-						<Card.Group itemsPerRow={4}>
-							{items.map(item => {
-								return (
-									<Item
-										key={item.thumb}
-										item={item}
-										onClick={onDetails}
-									/>
-								);
-							})}
-						</Card.Group>
-
-						<Divider />
-
-						<Button disabled={!bufferFilled} onClick={onNextPage}>
-							next page
-						</Button>
-						<Button
-							disabled={!(!bufferFilled && bufferNextExists)}
-							onClick={onNextBuffer}
-						>
-							next buffer
-						</Button>
-					</>
-				) : (
-					""
-				)}
+							<Segment>
+								<Button
+									disabled={!bufferFilled}
+									onClick={onNextPage}
+								>
+									next page
+								</Button>
+								<Button
+									disabled={
+										!(!bufferFilled && bufferNextExists)
+									}
+									onClick={onNextBuffer}
+								>
+									next buffer
+								</Button>
+							</Segment>
+						</>
+					) : (
+						""
+					)}
+				</Segment.Group>
 			</Container>
 		);
 	}

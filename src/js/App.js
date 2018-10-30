@@ -78,11 +78,11 @@ class App extends Component {
 	};
 
 	getNextPage = _ => {
-		if (!this.state.bufferFilled) {
-			throw new Error(
-				"[error] ==> trying to load next page with buffer empty."
-			);
-		}
+		// if (!this.state.bufferFilled) {
+		// 	throw new Error(
+		// 		"[error] ==> trying to load next page with buffer empty."
+		// 	);
+		// }
 
 		let b = this.buffer;
 		let items = b.items.slice(0, 10);
