@@ -7,9 +7,20 @@ import {
 	Card,
 	Button,
 	Segment,
+	Select,
 } from "semantic-ui-react";
 import Item from "./Item";
 import "../css/Gallery.scss";
+
+const options = Array.from({ length: 3 }, (_, i) => {
+	i += 1;
+	i *= 12;
+	return {
+		key: i,
+		text: i,
+		value: i,
+	};
+});
 
 class Gallery extends Component {
 	handleKeypress = event => {
@@ -24,6 +35,10 @@ class Gallery extends Component {
 			items,
 			totalHits,
 			loading,
+			itemsPerPage,
+
+			onItemsPerPageChange,
+
 			onDetails,
 
 			onNextPage,
@@ -50,6 +65,14 @@ class Gallery extends Component {
 							onKeyPress={this.handleKeypress}
 							icon="search"
 							fluid
+							action={
+								<Select
+									options={options}
+									value={itemsPerPage}
+									onChange={onItemsPerPageChange}
+								/>
+							}
+							actionPosition="left"
 						/>
 
 						{~totalHits ? (

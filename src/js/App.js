@@ -12,8 +12,9 @@ class App extends Component {
 
 		this.state = {
 			items: [],
-			totalHits: -1,
 			loading: false,
+			totalHits: -1,
+			itemsPerPage: 12,
 
 			nextPageExists: false,
 			nextBufferExists: false,
@@ -79,15 +80,20 @@ class App extends Component {
 	getPage = _ => {
 		let b = this.buffer;
 		let items;
+		let perPage = this.state.itemsPerPage;
 
-		items = b.items.slice(0, 10);
-		b.items = b.items.slice(10);
+		items = b.items.slice(0, perPage);
+		b.items = b.items.slice(perPage);
 
 		this.setState({ items, nextPageExists: !!b.items.length });
 	};
 
 	getNextBuffer = _ => {
 		this.query({ url: this.buffer.next });
+	};
+
+	handleItemsPerPageChange = (_, { value }) => {
+		this.setState({ itemsPerPage: value });
 	};
 
 	openDetails = async (_, { item: { data, collection } }) => {
@@ -119,6 +125,7 @@ class App extends Component {
 				<Gallery
 					{...rest}
 					onQuery={this.query}
+					onItemsPerPageChange={this.handleItemsPerPageChange}
 					onDetails={this.openDetails}
 					onNextPage={this.getPage}
 					onNextBuffer={this.getNextBuffer}
