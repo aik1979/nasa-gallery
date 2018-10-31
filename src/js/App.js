@@ -77,15 +77,20 @@ class App extends Component {
 		this.getPage();
 	};
 
-	getPage = _ => {
+	getPage = (append = false) => {
 		let b = this.buffer;
-		let items;
+		let newItems;
 		let perPage = this.state.itemsPerPage;
 
-		items = b.items.slice(0, perPage);
+		newItems = b.items.slice(0, perPage);
 		b.items = b.items.slice(perPage);
 
-		this.setState({ items, nextPageExists: !!b.items.length });
+		this.setState(prev => {
+			return {
+				items: append ? [...prev.items, ...newItems] : newItems,
+				nextPageExists: !!b.items.length,
+			};
+		});
 	};
 
 	getNextBuffer = _ => {

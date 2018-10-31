@@ -8,6 +8,7 @@ import {
 	Button,
 	Segment,
 	Select,
+	Checkbox,
 } from "semantic-ui-react";
 import Item from "./Item";
 import "../css/Gallery.scss";
@@ -23,11 +24,26 @@ const options = Array.from({ length: 3 }, (_, i) => {
 });
 
 class Gallery extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = { infScroll: false };
+	}
+
 	handleKeypress = event => {
 		if (event.key !== "Enter") return;
 
 		let query = event.target.value.trim();
 		this.props.onQuery({ str: query });
+	};
+
+	toggleInfScroll = _ => {
+		this.setState(prev => ({ infScroll: !prev.infScroll }));
+	};
+
+	handleNextPageLoad = _ => {
+		let append = this.state.infScroll;
+		this.props.onNextPage(append);
 	};
 
 	render() {
@@ -41,11 +57,14 @@ class Gallery extends Component {
 
 			onDetails,
 
-			onNextPage,
+			// onNextPage,
 			onNextBuffer,
 			nextPageExists,
 			nextBufferExists, // buffer == batch
 		} = this.props;
+
+		let { infScroll } = this.state;
+		console.log(infScroll);
 
 		return (
 			<Container>
@@ -77,7 +96,15 @@ class Gallery extends Component {
 						/>
 
 						{~totalHits ? (
-							<Header as="h4">got {totalHits} hits</Header>
+							<div className="subsearch">
+								<strong>got {totalHits} hits</strong>
+								<Checkbox
+									label="infinite scroll"
+									slider
+									value={infScroll}
+									onChange={this.toggleInfScroll}
+								/>
+							</div>
 						) : (
 							""
 						)}
@@ -102,7 +129,7 @@ class Gallery extends Component {
 							<Segment>
 								<Button
 									disabled={!nextPageExists}
-									onClick={onNextPage}
+									onClick={this.handleNextPageLoad}
 								>
 									next page
 								</Button>
