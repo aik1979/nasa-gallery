@@ -48,8 +48,8 @@ class Gallery extends Component {
 		} = this.props;
 
 		return (
-			<Container className="app__container">
-				<Header className="app__title" as="h1" textAlign="center">
+			<Container>
+				<Header className="header" as="h1" textAlign="center">
 					NASA IMAGES GALLERY APP
 					<Header.Subheader>
 						<List items={this.props.stack} horizontal />

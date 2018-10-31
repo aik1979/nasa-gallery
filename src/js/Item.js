@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Image, Header, Placeholder, Card } from "semantic-ui-react";
+import { Image, Card, Loader } from "semantic-ui-react";
 
 const hidden = {
 	display: "none",
@@ -20,22 +20,15 @@ class Item extends Component {
 
 		return (
 			<Card onClick={onClick} item={item}>
-				<Placeholder
-					className=""
-					style={{
-						height: "220px",
-						...((!loading && hidden) || {}),
-					}}
-				>
-					<Placeholder.Image />
-				</Placeholder>
-				<Image
-					wrapped
-					className="app__gallery__image"
-					src={item.thumb}
-					style={(loading && hidden) || {}}
-					onLoad={this.handleLoad}
-				/>
+				<div className="card_image">
+					<Loader active={loading} />
+					<Image
+						className="actual"
+						src={item.thumb}
+						style={(loading && hidden) || {}}
+						onLoad={this.handleLoad}
+					/>
+				</div>
 
 				<Card.Content>
 					<Card.Description>{item.data.title}</Card.Description>

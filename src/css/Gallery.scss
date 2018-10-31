@@ -1,16 +1,16 @@
 // get sorted naming
-.app__container {
-}
-
-.app__title {
+.header {
 	margin-top: 50px !important;
 }
 
-.app__search {
-	width: 100%;
-}
+.card_image {
+	height: 220px;
+	overflow: hidden;
+	position: relative;
 
-.app__gallery__image img {
-	height: 220px !important;
-	object-fit: cover;
+	.actual {
+		height: 100% !important;
+		width: 100%;
+		object-fit: cover;
+	}
 }
