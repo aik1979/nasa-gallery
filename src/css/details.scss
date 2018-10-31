@@ -1,8 +1,12 @@
-.details__image {
-	flex-basis: 0 !important;
-	flex-grow: 1 !important;
-}
-.details__description {
-	flex-basis: 0 !important;
-	flex-grow: 1 !important;
+.details {
+	margin: 0 !important;
+
+	& > *:first-child {
+		display: flex !important;
+		align-self: center;
+	}
+	& > * {
+		flex-basis: 0 !important;
+		flex-grow: 1 !important;
+	}
 }

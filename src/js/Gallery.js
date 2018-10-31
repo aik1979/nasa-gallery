@@ -70,6 +70,7 @@ class Gallery extends Component {
 									options={options}
 									value={itemsPerPage}
 									onChange={onItemsPerPageChange}
+									compact
 								/>
 							}
 							actionPosition="left"

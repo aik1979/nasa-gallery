@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Image, Header, Placeholder } from "semantic-ui-react";
+import { Modal, Image, Header, Segment } from "semantic-ui-react";
 import "../css/Details.scss";
 
 const hidden = {
@@ -28,31 +28,28 @@ class Details extends Component {
 		let data = (current && current.data) || {};
 		let images = (current && current.images) || [];
 
+		let preview = images[images.length - 1];
+		let orig = images[0];
+
 		return (
 			<Modal open={open} onClose={this.handleClose} centered={false}>
-				{/* <Modal.Header>{data.title}</Modal.Header> */}
-				<Modal.Content image>
-					<Placeholder
-						className="image details__image"
-						style={(!loading && hidden) || {}}
-					>
-						<Placeholder.Image />
-					</Placeholder>
-					<Image
-						wrapped
-						className="details__image"
-						src={images[3]}
-						style={(loading && hidden) || {}}
-						onLoad={this.handleLoad}
-					/>
+				<Segment.Group className="details" horizontal>
+					<Segment loading={loading}>
+						<Image
+							bordered
+							src={preview}
+							style={(loading && hidden) || {}}
+							onLoad={this.handleLoad}
+						/>
+					</Segment>
 
-					<Modal.Description className="details__description">
+					<Segment>
 						<Header>{data.title}</Header>
 						<p>{data.center}</p>
 						<p>{data.date_created}</p>
 						<p>{data.description}</p>
-					</Modal.Description>
-				</Modal.Content>
+					</Segment>
+				</Segment.Group>
 			</Modal>
 		);
 	}
