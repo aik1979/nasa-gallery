@@ -28,6 +28,23 @@ class Gallery extends Component {
 		super(props);
 
 		this.state = { infScroll: false };
+
+		this.sentinel = React.createRef();
+	}
+
+	componentDidMount() {
+		// TODO: scroll not working properly
+		let io = new IntersectionObserver(
+			({ 0: entry }) => {
+				if (!entry.intersectionRatio || !this.props.items.length)
+					return;
+
+				console.log("[calling NextPageLoad]");
+				this.handleNextPageLoad();
+			},
+			{ threshold: 1.0 }
+		);
+		io.observe(this.sentinel.current);
 	}
 
 	handleKeypress = event => {
@@ -64,7 +81,7 @@ class Gallery extends Component {
 		} = this.props;
 
 		let { infScroll } = this.state;
-		console.log(infScroll);
+		// console.log(infScroll);
 
 		return (
 			<Container>
@@ -95,18 +112,16 @@ class Gallery extends Component {
 							actionPosition="left"
 						/>
 
-						{~totalHits ? (
+						{totalHits !== -1 && (
 							<div className="subsearch">
 								<strong>got {totalHits} hits</strong>
 								<Checkbox
 									label="infinite scroll"
 									slider
-									value={infScroll}
+									value={Number(infScroll)}
 									onChange={this.toggleInfScroll}
 								/>
 							</div>
-						) : (
-							""
 						)}
 					</Segment>
 
@@ -147,6 +162,7 @@ class Gallery extends Component {
 						""
 					)}
 				</Segment.Group>
+				<div className="sentinel" ref={this.sentinel} />
 			</Container>
 		);
 	}

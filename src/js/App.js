@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Gallery from "./Gallery";
 import Details from "./Details";
 
-const stack = ["react", "semantic-ui-react"];
+const STACK = ["react", "semantic-ui-react"];
 
 class App extends Component {
 	constructor(props) {
@@ -134,7 +134,7 @@ class App extends Component {
 					onDetails={this.openDetails}
 					onNextPage={this.getPage}
 					onNextBuffer={this.getNextBuffer}
-					stack={stack}
+					stack={STACK}
 				/>
 				<Details current={current} onClose={this.closeDetails} />
 			</>
