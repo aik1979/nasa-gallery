@@ -1,5 +1,7 @@
-.main-header {
-	margin-top: 50px !important;
+.container {
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: 60px 0;
 }
 
 .subsearch {
@@ -23,6 +25,5 @@
 
 .sentinel {
 	height: 400px;
-	margin-bottom: 100px;
 	border: 2px dashed darkkhaki;
 }

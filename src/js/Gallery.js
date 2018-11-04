@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-	Container,
 	Input,
 	Header,
 	List,
@@ -13,7 +12,7 @@ import {
 import Item from "./Item";
 import "../css/Gallery.scss";
 
-const options = Array.from({ length: 3 }, (_, i) => {
+const OPTIONS = Array.from({ length: 3 }, (_, i) => {
 	i += 1;
 	i *= 12;
 	return {
@@ -84,26 +83,25 @@ class Gallery extends Component {
 		// console.log(infScroll);
 
 		return (
-			<Container>
-				<Header className="main-header" as="h1" textAlign="center">
+			<div className="container">
+				<Header as="h1" textAlign="center">
 					NASA IMAGES GALLERY APP
 					<Header.Subheader>
 						<List items={this.props.stack} horizontal />
 					</Header.Subheader>
 				</Header>
 
-				{/* can I pass properties with the same name */}
 				<Segment.Group>
 					<Segment>
 						<Input
-							placeholder="Search..."
 							loading={loading}
 							onKeyPress={this.handleKeypress}
+							placeholder="Search..."
 							icon="search"
 							fluid
 							action={
 								<Select
-									options={options}
+									options={OPTIONS}
 									value={itemsPerPage}
 									onChange={onItemsPerPageChange}
 									compact
@@ -163,7 +161,7 @@ class Gallery extends Component {
 					)}
 				</Segment.Group>
 				<div className="sentinel" ref={this.sentinel} />
-			</Container>
+			</div>
 		);
 	}
 }
