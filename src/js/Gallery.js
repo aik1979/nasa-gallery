@@ -26,10 +26,13 @@ class Gallery extends Component {
 	componentDidMount() {
 		let io = new IntersectionObserver(
 			({ 0: entry }) => {
-				if (!entry.intersectionRatio || !this.props.items.length)
+				if (
+					entry.intersectionRatio !== 1 ||
+					!this.props.items.length ||
+					!this.state.infScroll
+				)
 					return;
 
-				console.log("[calling NextPageLoad]");
 				this.handleNextPageLoad();
 			},
 			{ threshold: 1.0 }
@@ -134,7 +137,11 @@ class Gallery extends Component {
 						</>
 					)}
 				</Segment.Group>
-				<div className="sentinel" ref={this.sentinel} />
+				<div
+					className="sentinel"
+					ref={this.sentinel}
+					hidden={!(infScroll && nextPageExists)}
+				/>
 			</div>
 		);
 	}
