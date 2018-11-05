@@ -49,6 +49,11 @@ class Gallery extends Component {
 		this.props.onNextPage(append);
 	};
 
+	handleNextBuffer = _ => {
+		this.props.onNextBuffer();
+		window.scroll({ top: 0, left: 0, behavior: "smooth" });
+	};
+
 	render() {
 		let {
 			items,
@@ -63,7 +68,7 @@ class Gallery extends Component {
 			onDetails,
 
 			// onNextPage,
-			onNextBuffer,
+			// onNextBuffer,
 			nextPageExists,
 			nextBufferExists, // buffer == batch
 		} = this.props;
@@ -129,7 +134,7 @@ class Gallery extends Component {
 									disabled={
 										!(!nextPageExists && nextBufferExists)
 									}
-									onClick={onNextBuffer}
+									onClick={this.handleNextBuffer}
 								>
 									next buffer
 								</Button>
