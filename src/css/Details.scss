@@ -1,13 +1,14 @@
-.details {
+.details__group {
 	margin: 0 !important;
 
-	& > *:first-child {
-		display: flex !important;
-		justify-content: center;
-		align-items: center;
-	}
-	& > * {
-		flex-basis: 0 !important;
-		flex-grow: 1 !important;
+	.segment {
+		flex: 1 0 !important;
+		padding: 18px;
+
+		&:first-child {
+			display: flex !important;
+			justify-content: center;
+			align-items: center;
+		}
 	}
 }

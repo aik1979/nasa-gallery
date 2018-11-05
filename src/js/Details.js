@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { Modal, Image, Header, Segment } from "semantic-ui-react";
+
 import "../css/Details.scss";
 
-const hidden = {
-	display: "none",
-};
 class Details extends Component {
 	constructor(props) {
 		super(props);
@@ -33,20 +31,24 @@ class Details extends Component {
 
 		return (
 			<Modal open={open} onClose={this.handleClose} centered={false}>
-				<Segment.Group className="details" horizontal>
+				<Segment.Group className="details__group" horizontal>
 					<Segment loading={loading}>
 						<Image
-							bordered
 							src={preview}
-							style={(loading && hidden) || {}}
 							onLoad={this.handleLoad}
+							bordered
 						/>
 					</Segment>
 
 					<Segment>
-						<Header>{data.title}</Header>
-						<p>{data.center}</p>
-						<p>{data.date_created}</p>
+						<Header>
+							{data.title}
+							<Header.Subheader>
+								<p>{data.center}</p>
+								<p>{data.date_created}</p>
+							</Header.Subheader>
+						</Header>
+
 						<p>{data.description}</p>
 					</Segment>
 				</Segment.Group>

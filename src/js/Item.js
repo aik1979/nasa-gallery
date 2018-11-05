@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import { Image, Card, Loader } from "semantic-ui-react";
 
-const hidden = {
-	display: "none",
-};
 class Item extends Component {
 	constructor(props) {
 		super(props);
@@ -25,7 +22,7 @@ class Item extends Component {
 					<Image
 						className="actual"
 						src={item.thumb}
-						style={(loading && hidden) || {}}
+						hidden={loading}
 						onLoad={this.handleLoad}
 					/>
 				</div>
