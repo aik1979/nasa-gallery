@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import Gallery from "./Gallery";
 import Details from "./Details";
 
-const STACK = ["react", "semantic-ui-react"];
-
 class App extends Component {
 	constructor(props) {
 		super(props);
@@ -134,7 +132,6 @@ class App extends Component {
 					onDetails={this.openDetails}
 					onNextPage={this.getPage}
 					onNextBuffer={this.getNextBuffer}
-					stack={STACK}
 				/>
 				<Details current={current} onClose={this.closeDetails} />
 			</>

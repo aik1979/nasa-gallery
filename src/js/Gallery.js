@@ -1,26 +1,18 @@
 import React, { Component } from "react";
 import {
-	Input,
 	Header,
 	List,
 	Card,
 	Button,
 	Segment,
-	Select,
 	Checkbox,
 } from "semantic-ui-react";
+import Search from "./Search";
 import Item from "./Item";
+
 import "../css/Gallery.scss";
 
-const OPTIONS = Array.from({ length: 3 }, (_, i) => {
-	i += 1;
-	i *= 12;
-	return {
-		key: i,
-		text: i,
-		value: i,
-	};
-});
+const STACK = ["react", "semantic-ui-react"];
 
 class Gallery extends Component {
 	constructor(props) {
@@ -32,7 +24,6 @@ class Gallery extends Component {
 	}
 
 	componentDidMount() {
-		// TODO: scroll not working properly
 		let io = new IntersectionObserver(
 			({ 0: entry }) => {
 				if (!entry.intersectionRatio || !this.props.items.length)
@@ -45,13 +36,6 @@ class Gallery extends Component {
 		);
 		io.observe(this.sentinel.current);
 	}
-
-	handleKeypress = event => {
-		if (event.key !== "Enter") return;
-
-		let query = event.target.value.trim();
-		this.props.onQuery({ str: query });
-	};
 
 	toggleInfScroll = _ => {
 		this.setState(prev => ({ infScroll: !prev.infScroll }));
@@ -67,8 +51,10 @@ class Gallery extends Component {
 			items,
 			totalHits,
 			loading,
-			itemsPerPage,
 
+			onQuery,
+
+			itemsPerPage,
 			onItemsPerPageChange,
 
 			onDetails,
@@ -87,27 +73,17 @@ class Gallery extends Component {
 				<Header as="h1" textAlign="center">
 					NASA IMAGES GALLERY APP
 					<Header.Subheader>
-						<List items={this.props.stack} horizontal />
+						<List items={STACK} horizontal />
 					</Header.Subheader>
 				</Header>
 
 				<Segment.Group>
 					<Segment>
-						<Input
+						<Search
 							loading={loading}
-							onKeyPress={this.handleKeypress}
-							placeholder="Search..."
-							icon="search"
-							fluid
-							action={
-								<Select
-									options={OPTIONS}
-									value={itemsPerPage}
-									onChange={onItemsPerPageChange}
-									compact
-								/>
-							}
-							actionPosition="left"
+							onQuery={onQuery}
+							itemsPerPage={itemsPerPage}
+							onItemsPerPageChange={onItemsPerPageChange}
 						/>
 
 						{totalHits !== -1 && (
@@ -123,7 +99,7 @@ class Gallery extends Component {
 						)}
 					</Segment>
 
-					{items.length ? (
+					{!!items.length && (
 						<>
 							<Segment>
 								<Card.Group itemsPerRow={4}>
@@ -156,8 +132,6 @@ class Gallery extends Component {
 								</Button>
 							</Segment>
 						</>
-					) : (
-						""
 					)}
 				</Segment.Group>
 				<div className="sentinel" ref={this.sentinel} />
